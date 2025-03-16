@@ -14,7 +14,7 @@ const initDB = async () => {
 // Configurar CORS
 app.use(
   cors({
-    origin: process.env.origin || 'http://localhost:4000',
+    origin: process.env.ORIGIN || 'http://localhost:4000',
     methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'], 
     credentials: true, 
