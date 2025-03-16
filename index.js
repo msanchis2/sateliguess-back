@@ -14,10 +14,10 @@ const initDB = async () => {
 // Configurar CORS
 app.use(
   cors({
-    origin: 'http://localhost:4000', // Sin la barra final
+    origin: process.env.origin || 'http://localhost:4000',
     methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Configurar encabezados permitidos
-    credentials: true, // Si usas cookies o headers de autenticación
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+    credentials: true, 
   })
 );
 
@@ -38,9 +38,9 @@ app.use('/api-docs', serve, setup(swaggerDocs));
 
 // Rutas de la API
 app.use('/api', apiRoutes);
-app.options('*', cors()); // Permite todas las solicitudes preflight
+app.options('*', cors());
 
 // Inicialización de la base de datos y servidor
 initDB().then(() => {
-  app.listen(3000, () => console.log('Servidor en http://localhost:3000'));
+  app.listen( process.env.PORT || 3000, () => console.log('Güebos'));
 });
