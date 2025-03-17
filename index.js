@@ -12,9 +12,20 @@ const initDB = async () => {
 };
 
 // Configurar CORS
+const allowedOrigins = [
+  process.env.ORIGIN || 'http://localhost:4000', 
+  'http://85.208.16.214',  
+  'https://85.208.16.214', 
+];
 app.use(
   cors({
-    origin: process.env.ORIGIN || 'http://localhost:4000',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('No permitido por CORS'));
+      }
+    },
     methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'], 
     credentials: true, 
