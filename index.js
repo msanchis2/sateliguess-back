@@ -23,7 +23,8 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('No permitido por CORS'));
+        console.log('Solicitud desde:', origin);
+        callback(new Error('Chinga tu puta madre'));
       }
     },
     methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE'],
@@ -53,5 +54,5 @@ app.options('*', cors());
 
 // Inicialización de la base de datos y servidor
 initDB().then(() => {
-  app.listen( process.env.PORT || 3000, () => console.log('Güebos'));
+  app.listen( process.env.PORT || 3000, () => console.log('ATENCIÓN: Hola'));
 });
