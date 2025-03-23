@@ -15,12 +15,16 @@ const Municipio = db.define('Municipio', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
+    comarca: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+    },
     latitud: {
-        type: DataTypes.DECIMAL(9,6),
+        type: DataTypes.DECIMAL(9, 6),
         allowNull: false
     },
     longitud: {
-        type: DataTypes.DECIMAL(9,6),
+        type: DataTypes.DECIMAL(9, 6),
         allowNull: false
     }
 }, {
