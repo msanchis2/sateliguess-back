@@ -1,18 +1,17 @@
-// controllers/municipios.controller.js
 import Municipio from '../model/municipios.model.js';
-import Catalunya from '../model/catalunya.model.js'; // Importa el modelo de Catalunya
+import Catalunya from '../model/catalunya.model.js';
+import Illes from '../model/illes.model.js';
 import { Sequelize, Op } from 'sequelize';
 
-// Función para obtener el modelo correcto según el parámetro p
 const getModel = (p) => {
-    return p === 'pv' ? Municipio : Catalunya;
+    const paisos = {"pv": Municipio, "ca": Catalunya, "ib": Illes};
+    return paisos[p];
 };
 
-// Obtener listado de municipios por búsqueda contextual
 export const buscarMunicipios = async (req, res) => {
     try {
-        const { p } = req.query; // Obtener el parámetro p
-        const model = getModel(p); // Obtener el modelo correcto
+        const { p } = req.query; 
+        const model = getModel(p); 
         const busqueda = req.params.busqueda.normalize("NFD").replace(/[̀-ͯ']/g, "");
         const municipios = await model.findAll({
             where: Sequelize.where(
@@ -29,11 +28,10 @@ export const buscarMunicipios = async (req, res) => {
     }
 };
 
-// Obtener datos de un municipio por ID
 export const obtenerMunicipioPorId = async (req, res) => {
     try {
-        const { p } = req.query; // Obtener el parámetro p
-        const model = getModel(p); // Obtener el modelo correcto
+        const { p } = req.query; 
+        const model = getModel(p); 
         const municipio = await model.findByPk(req.params.id);
         if (!municipio) {
             return res.status(404).json({ error: 'Municipio no encontrado' });
@@ -44,11 +42,10 @@ export const obtenerMunicipioPorId = async (req, res) => {
     }
 };
 
-// Obtener un municipio aleatorio basado en el día actual
 export const obtenerMunicipioDiario = async (req, res) => {
     try {
-        const { p } = req.query; // Obtener el parámetro p
-        const model = getModel(p); // Obtener el modelo correcto
+        const { p } = req.query; 
+        const model = getModel(p); 
         const count = await model.count();
         const dayOfYear = new Date().getDate() + (new Date().getMonth() * 30);
         const randomIndex = dayOfYear % count;
@@ -59,13 +56,12 @@ export const obtenerMunicipioDiario = async (req, res) => {
     }
 };
 
-// Obtener un municipio aleatorio
 export const obtenerMunicipioAleatorio = async (req, res) => {
     try {
-        const { p } = req.query; // Obtener el parámetro p
-        const model = getModel(p); // Obtener el modelo correcto
+        const { p } = req.query; 
+        const model = getModel(p); 
         const count = await model.count();
-        const randomIndex = Math.floor(Math.random() * count); // Genera un índice aleatorio
+        const randomIndex = Math.floor(Math.random() * count); 
         const municipio = await model.findOne({ offset: randomIndex });
         res.json(municipio);
     } catch (error) {
